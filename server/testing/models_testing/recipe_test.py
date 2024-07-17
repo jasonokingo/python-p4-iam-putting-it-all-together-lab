@@ -1,3 +1,4 @@
+
 import pytest
 from sqlalchemy.exc import IntegrityError
 
@@ -64,11 +65,10 @@ class TestRecipe:
             Recipe.query.delete()
             db.session.commit()
 
-            '''must raise either a sqlalchemy.exc.IntegrityError with constraints or a custom validation ValueError'''
-            with pytest.raises( (IntegrityError, ValueError) ):
-                recipe = Recipe(
-                    title="Generic Ham",
-                    instructions="idk lol")
+            recipe = Recipe(
+                title="Generic Ham",
+                instructions="idk lol")
+
+            with pytest.raises(IntegrityError):
                 db.session.add(recipe)
                 db.session.commit()
-
